@@ -1,0 +1,16 @@
+.container {
+  font-size: 1rem;
+}
+
+.mat-mdc-dialog-content::-webkit-scrollbar {
+  width: 12px;
+}
+
+.mat-mdc-dialog-content::-webkit-scrollbar-track {
+  background: white;
+}
+
+.mat-mdc-dialog-content::-webkit-scrollbar-thumb {
+  background: rgb(201, 201, 201);
+  border-radius: 1em;
+}

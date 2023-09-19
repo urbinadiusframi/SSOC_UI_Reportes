@@ -1,0 +1,1644 @@
+<div class="container">
+  <app-select-hide-column
+    *ngIf="tableContent.length !== 0"
+    [options]="hiddenColumnsTable"
+    (eventHideColumn)="onChangeSelect($event)"
+  ></app-select-hide-column>
+
+  <section class="mat-elevation-z8 container-section-table">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      matSort
+      (matSortChange)="announceSortChange($any($event))"
+      (cdkDropListDropped)="dropColumn($event)"
+      class="container-table position-relative"
+      [style.width]="widthTable + 'px'"
+      aria-describedby="Resultados de la consulta."
+    >
+      <ng-container matColumnDef="id">
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+            width: 100px;
+          "
+        >
+          #
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.id }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="numeroRadicado"
+        class="text-center"
+        *ngIf="!hiddenColumnsTable.numeroRadicado"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Radicación número
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.numeroRadicado }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="usuarioRadicador"
+        *ngIf="!hiddenColumnsTable.usuarioRadicador"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Usuario radicador
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.usuarioRadicador }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="usuarioQueProyecto"
+        *ngIf="!hiddenColumnsTable.usuarioQueProyecto"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Usuario que proyectó
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.usuarioQueProyecto }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="fechaRadicacionPostal"
+        *ngIf="!hiddenColumnsTable.fechaRadicacionPostal"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Fecha radicación
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.fechaRadicacionPostal | date : "dd-MM-YYYY" }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="funcionarioAsignado"
+        *ngIf="!hiddenColumnsTable.funcionarioAsignado"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Funcionario asignado
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.funcionarioAsignado }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="funcionarioOrigen"
+        *ngIf="!hiddenColumnsTable.funcionarioOrigen"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Funcionario origen
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.funcionarioOrigen }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="codigoProceso"
+        *ngIf="!hiddenColumnsTable.codigoProceso"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Código proceso
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.codigoProceso }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="nombreProceso"
+        *ngIf="!hiddenColumnsTable.nombreProceso"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Nombre proceso
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.nombreProceso }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="nombreTramite"
+        *ngIf="!hiddenColumnsTable.nombreTramite"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Nombre trámite
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.nombreTramite }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="expediente"
+        *ngIf="!hiddenColumnsTable.expediente"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Expediente
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.expediente }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="nombreDestinatario"
+        *ngIf="!hiddenColumnsTable.nombreDestinatario"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Nombre destinatario
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.nombreDestinatario }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="numeroRadicadoAnterior"
+        *ngIf="!hiddenColumnsTable.numeroRadicadoAnterior"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Número radicado anterior
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.numeroRadicadoAnterior }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="nombreDependenciaAsignada"
+        *ngIf="!hiddenColumnsTable.nombreDependenciaAsignada"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Nombre dependencia asignada
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.nombreDependenciaAsignada }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="codigoTramite"
+        *ngIf="!hiddenColumnsTable.codigoTramite"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Código trámite
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.codigoTramite }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="identificacionRemitente"
+        *ngIf="!hiddenColumnsTable.identificacionRemitente"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Identificación remitente
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.identificacionRemitente }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="identificacionSociedad"
+        *ngIf="!hiddenColumnsTable.identificacionSociedad"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Número identificación persona natural y/o jurídica
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.identificacionSociedad }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="nombreSociedad"
+        *ngIf="!hiddenColumnsTable.nombreSociedad"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Nombre de la persona natural y/o jurídica
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.nombreSociedad }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="codigoDependenciaOrigen"
+        *ngIf="!hiddenColumnsTable.codigoDependenciaOrigen"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Código dependencia origen
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.codigoDependenciaOrigen }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="nombreDependenciaOrigen"
+        *ngIf="!hiddenColumnsTable.nombreDependenciaOrigen"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Nombre dependencia origen
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.nombreDependenciaOrigen }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="identificacionDestinatario"
+        *ngIf="!hiddenColumnsTable.identificacionDestinatario"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Identificación destinatario
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.identificacionDestinatario }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="nombreRemitente"
+        *ngIf="!hiddenColumnsTable.nombreRemitente"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Nombre remitente
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.nombreRemitente }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="horaRadicacion"
+        *ngIf="!hiddenColumnsTable.horaRadicacion"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Hora radicación
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.horaRadicacion }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="folios" *ngIf="!hiddenColumnsTable.folios">
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Folios
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.folios }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="entradaOSalida"
+        *ngIf="!hiddenColumnsTable.entradaOSalida"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Entrada o salida
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.entradaOSalida }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="representanteLegal"
+        *ngIf="!hiddenColumnsTable.representanteLegal"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Representante legal/particular/funcionario
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.representanteLegal }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="direccion"
+        *ngIf="!hiddenColumnsTable.direccion"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Dirección
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.direccion }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="telefono"
+        *ngIf="!hiddenColumnsTable.telefono"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Teléfono
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.telefono }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="ciudad" *ngIf="!hiddenColumnsTable.ciudad">
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Ciudad
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.ciudad }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="tipoCuaderno"
+        *ngIf="!hiddenColumnsTable.tipoCuaderno"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Tipo de cuaderno
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.tipoCuaderno }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="medioEnvio"
+        *ngIf="!hiddenColumnsTable.medioEnvio"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Medio de envío
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.medioEnvio }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="consecutivo"
+        *ngIf="!hiddenColumnsTable.consecutivo"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Consecutivo
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.consecutivo }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="tipoSeguridad"
+        *ngIf="!hiddenColumnsTable.tipoSeguridad"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Tipo de seguridad
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.tipoSeguridad }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="referenciaExternaNumero"
+        *ngIf="!hiddenColumnsTable.referenciaExternaNumero"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Referencia externa número
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.referenciaExternaNumero }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="termino" *ngIf="!hiddenColumnsTable.termino">
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Termino
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.termino }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="multa" *ngIf="!hiddenColumnsTable.multa">
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Multa
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.multa }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="fechaVence"
+        *ngIf="!hiddenColumnsTable.fechaVence"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Fecha vence
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.fechaVence | date : "dd-MM-YYYY" }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="aplicacion"
+        *ngIf="!hiddenColumnsTable.aplicacion"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Aplicación
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.aplicacion }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="borrador"
+        *ngIf="!hiddenColumnsTable.borrador"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Borrador
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.borrador }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="linea" *ngIf="!hiddenColumnsTable.linea">
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Línea
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.linea }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="digitalizacion"
+        *ngIf="!hiddenColumnsTable.digitalizacion"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Digitalización
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.digitalizacion }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="digitalizador"
+        *ngIf="!hiddenColumnsTable.digitalizador"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Digitalizador
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.digitalizador }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="identificacionDependenciaAsignada"
+        *ngIf="!hiddenColumnsTable.identificacionDependenciaAsignada"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Identificación dependencia asignada
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.identificacionDependenciaAsignada }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="estado" *ngIf="!hiddenColumnsTable.estado">
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Estado
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.estado }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="responsableFirma"
+        *ngIf="!hiddenColumnsTable.responsableFirma"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Responsable firma
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.responsableFirma }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="correoElectronico"
+        *ngIf="!hiddenColumnsTable.correoElectronico"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Correo
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.correoElectronico }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="lote" *ngIf="!hiddenColumnsTable.lote">
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Lote
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.lote }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="postalEstado"
+        *ngIf="!hiddenColumnsTable.postalEstado"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Postal estado
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.postalEstado }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="fechaEstadoFinancieros"
+        *ngIf="!hiddenColumnsTable.fechaEstadoFinancieros"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Fecha estados financieros
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.fechaEstadoFinancieros }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="anexosFisicos"
+        *ngIf="!hiddenColumnsTable.anexosFisicos"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Anexos físicos
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.anexosFisicos }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="paquete" *ngIf="!hiddenColumnsTable.paquete">
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Paquete
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.paquete }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="modulo" *ngIf="!hiddenColumnsTable.modulo">
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          mat-sort-header
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Módulo
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          {{ element.modulo }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="detalle" *ngIf="!hiddenColumnsTable.detalle">
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Detalle
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          <button
+            class="btn btn-primary"
+            mat-button
+            ngbTooltip="Ver detalle del radicado."
+            (click)="openDialogDetailDocument(element)"
+          >
+            Detalle
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="previsualizar"
+        *ngIf="!hiddenColumnsTable.previsualizar"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Previsualizar radicado principal
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          <a
+            *ngIf="element.idFilenet"
+            class="btn btn-warning text-decoration-underline m-0"
+            ngbTooltip="Previsualizar el radicado principal."
+            [href]="generateURLToPrevisualiceDocument(element.idFilenet)"
+            target="_blank"
+          >
+            Ver
+          </a>
+          <!--<button
+            *ngIf="element.idFilenet"
+            class="btn btn-warning text-decoration-underline"
+            ngbTooltip="Previsualizar el radicado principal."
+            (click)="
+              openDialogViewDocument(
+                'Previsualizar radicado principal',
+                generateURLToPrevisualiceDocument(element.idFilenet)
+              )
+            "
+          >
+            Ver
+          </button>-->
+
+          <button
+            class="btn btn-warning disabled"
+            ngbTooltip="No hay un documento disponible para este radicado"
+            style="pointer-events: auto"
+            *ngIf="!element.idFilenet"
+          >
+            Ver
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-container
+        matColumnDef="visualizar"
+        *ngIf="!hiddenColumnsTable.visualizar"
+      >
+        <th
+          mat-header-cell
+          cdkDrag
+          *matHeaderCellDef
+          style="
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          Visualizar radicado y anexos
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          style="
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.87rem;
+          "
+        >
+          <a
+            class="btn btn-success"
+            mat-button
+            [href]="element.urlRadicadoYAnexos"
+            target="_blank"
+            ngbTooltip="Visualizar el radicado principal y sus anexos."
+          >
+            Ver
+          </a>
+          <!--<button
+            class="btn btn-success"
+            mat-button
+            (click)="
+              openDialogViewDocument(
+                'Visualizar radicado principal y sus anexos',
+                element.urlRadicadoYAnexos
+              )
+            "
+            ngbTooltip="Visualizar el radicado principal y sus anexos."
+          >
+            Ver
+          </button>-->
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    </table>
+  </section>
+</div>

@@ -1,0 +1,16 @@
+.container-select-drop-down {
+  display: flex;
+  margin-bottom: 1em;
+}
+
+.container-list-items {
+  width: 450px;
+  max-height: 300px;
+  overflow: auto;
+}
+
+.container-select {
+  position: relative;
+  z-index: 1;
+  font-size: 0.9em;
+}

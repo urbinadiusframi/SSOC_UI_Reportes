@@ -1,0 +1,756 @@
+<app-header [title]="'CONSULTA AVANZADA'"></app-header>
+<form [formGroup]="formularioBusquedad" class="container-form">
+  <!-- Primer bloque -->
+  <div class="container border border-3 rounded-3 mt-5 pb-5 pt-3">
+    <!-- Primer fila  -->
+    <div class="row mt-2 mb-3">
+      <div
+        class="col-lg-3"
+        [class.container-input-invalid]="
+          formularioBusquedad.get('numeroRadicado')?.invalid
+        "
+      >
+        <basica-numero-radicado
+        [control]="formularioBusquedad.get('numeroRadicado')!"
+        formControlName="numeroRadicado"></basica-numero-radicado>
+      </div>
+      
+    </div>
+
+    <!-- Segunda fila  -->
+    <div class="row mb-3">
+      <div class="col-lg-3" [class.container-input-invalid]="
+          (formularioBusquedad.get('fechaRadicacion')?.touched &&
+            formularioBusquedad.get('fechaRadicacion')?.invalid) ||
+          formularioBusquedad.hasError('DatesInvalid')
+        ">
+        <label class="container-form__label">Fecha desde</label>
+        <input type="date" name="fechaDesde" class="container-form__input" id="fechaDesde"
+          ngbTooltip="Se recomienda usar el campo fecha desde, fecha hasta o ambos, para que la ejecución de la consulta sea más rápida."
+          formControlName="fechaRadicacion" (keydown)="onEventKeydownInputDate($event)" />
+
+        <p *ngIf="formularioBusquedad?.hasError('DatesInvalid')">
+          La fecha inicial no puede ser mayor que la fecha final.
+        </p>
+      </div>
+      <div class="col-lg-3" [class.container-input-invalid]="
+          formularioBusquedad.get('fechaHasta')?.touched &&
+          formularioBusquedad.get('fechaHasta')?.invalid
+        ">
+        <label class="container-form__label">Fecha hasta</label>
+        <input type="date" name="fechaHasta"
+          ngbTooltip="Se recomienda usar el campo fecha desde, fecha hasta o ambos, para que la ejecución de la consulta sea más rápida."
+          class="container-form__input" id="fechaHasta" formControlName="fechaHasta"
+          (keydown)="onEventKeydownInputDate($event)" />
+      </div>
+
+      <div class="col-lg-3" [class.container-input-invalid]="
+          formularioBusquedad.get('expediente')?.invalid
+        ">
+        <label class="container-form__label">Expediente</label>
+        <input type="text" name="expediente" class="container-form__input" id="expediente"
+          formControlName="expediente" />
+
+        <p *ngIf="formularioBusquedad.get('expediente')?.hasError('maxlength')">
+          Máximo 20 caracteres.
+        </p>
+
+        <p *ngIf="formularioBusquedad.get('expediente')?.hasError('pattern')">
+          Este campo solo acepta caracteres alfanuméricos y guiones.
+        </p>
+      </div>
+    </div>
+
+    <!-- Tercera Fila -->
+    <div class="row mb-3">
+      <div class="col-lg-6">
+        <label class="container-form__label">Código y/o nombre trámite</label>
+
+        <app-dropdown-search [formControlConsultaMigrados]="getFormControl('codigoONombreTramite')" [datos]="tramites"
+          [limpiarFormulario]="formMustBeCleaned"></app-dropdown-search>
+      </div>
+    </div>
+
+    <!-- Cuarta Fila -->
+    <div class="row mb-3">
+      <div class="col-lg-6" [class.container-input-invalid]="
+          formularioBusquedad.get('identificacionDestinatario')?.invalid
+        ">
+        <label class="container-form__label">
+          Identificación del destinatario
+        </label>
+
+        <input type="text" name="identificacionDestinatario" id="identificacionDestinatario"
+          class="container-form__input" formControlName="identificacionDestinatario" />
+
+        <p *ngIf="
+            formularioBusquedad
+              .get('identificacionDestinatario')
+              ?.hasError('maxlength')
+          ">
+          Máximo 20 caracteres.
+        </p>
+
+        <p *ngIf="
+            formularioBusquedad
+              .get('identificacionDestinatario')
+              ?.hasError('pattern')
+          ">
+          Este campo solo acepta caracteres alfanuméricos, guiones y puntos.
+        </p>
+      </div>
+
+      <div class="col-lg-6" [class.container-input-invalid]="
+          formularioBusquedad.get('nombreDestinatario')?.invalid
+        ">
+        <label class="container-form__label"> Nombre del destinatario </label>
+
+        <input type="text" name="nombreDestinatario" id="nombreDestinatario" class="container-form__input"
+          formControlName="nombreDestinatario" />
+
+        <p *ngIf="
+            formularioBusquedad.get('nombreDestinatario')?.hasError('maxlength')
+          ">
+          Máximo 280 caracteres.
+        </p>
+
+        <p *ngIf="
+            formularioBusquedad.get('nombreDestinatario')?.hasError('pattern')
+          ">
+          Este campo solo acepta caracteres alfanuméricos, guiones y puntos.
+        </p>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-lg-6" [class.container-input-invalid]="
+          formularioBusquedad.get('usuarioRadicador')?.invalid
+        ">
+        <label class="container-form__label">Usuario que radicó</label>
+        <input type="text" name="usuarioRadicador" class="container-form__input" id="usuarioRadicador"
+          formControlName="usuarioRadicador" />
+
+        <p *ngIf="
+            formularioBusquedad.get('usuarioRadicador')?.hasError('maxlength')
+          ">
+          Este campo acepta hasta 80 caracteres.
+        </p>
+
+        <p *ngIf="
+            formularioBusquedad.get('usuarioRadicador')?.hasError('pattern')
+          ">
+          Este campo solo acepta caracteres alfanuméricos.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Segundo bloque -->
+  <div class="container border border-3 rounded-3 mt-5 pb-5 pt-3">
+    <!-- Quinta fila  -->
+    <div class="row mb-3 mt-3">
+      <div class="col-lg-6">
+        <label class="container-form__label">
+          Código y/o nombre dependencia asignada
+        </label>
+
+        <app-dropdown-search [formControlConsultaMigrados]="getFormControl('dependenciaAsignada')"
+          [datos]="dependencias" [limpiarFormulario]="formMustBeCleaned"></app-dropdown-search>
+      </div>
+
+      <div class="col-lg-6">
+        <label class="container-form__label">Funcionario asignado</label>
+
+        <app-dropdown-search [formControlConsultaMigrados]="getFormControl('funcionarioAsignado')"
+          [datos]="funcionarios" [limpiarFormulario]="formMustBeCleaned"></app-dropdown-search>
+      </div>
+    </div>
+
+    <!-- Sexta fila  -->
+    <div class="row mb-3">
+      <div class="col-lg-6">
+        <label class="container-form__label">
+          Código y/o nombre dependencia origen
+        </label>
+
+        <app-dropdown-search [formControlConsultaMigrados]="
+            getFormControl('codigoOdependenciaOrigen')
+          " [datos]="dependencias" [limpiarFormulario]="formMustBeCleaned"></app-dropdown-search>
+      </div>
+
+      <div class="col-lg-6">
+        <label class="container-form__label"> Funcionario origen </label>
+
+        <app-dropdown-search [formControlConsultaMigrados]="getFormControl('funcionarioOrigen')" [datos]="funcionarios"
+          [limpiarFormulario]="formMustBeCleaned"></app-dropdown-search>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tercer bloque -->
+  <div class="container border border-3 rounded-3 mt-5 pb-5 pt-3">
+    <!-- Septima fila  -->
+    <div class="row mb-3 mt-3">
+      <div class="col-lg-6" [class.container-input-invalid]="
+          formularioBusquedad.get('identificacionRemitente')?.invalid
+        ">
+        <label class="container-form__label">
+          Identificación o nombre del remitente
+        </label>
+
+        <app-select-search-with-request [buttonText]="'Seleccione un remitente'" [isSelectForListarRemitente]="true"
+          [placeholder]="'Buscar un remitente...'" [nombrePropiedad]="'identificacionRemitente'"
+          (onSelectValue)="onSelectSociedadORemitente($event)"
+          [limpiarFormulario]="formMustBeCleaned"></app-select-search-with-request>
+      </div>
+
+      <div class="col-lg-6">
+        <label class="container-form__label">
+          Número identificación o nombre de la persona natural y/o jurídica
+        </label>
+
+        <app-select-search-with-request [buttonText]="'Seleccione una sociedad'"
+          [placeholder]="'Buscar una sociedad...'" [isSelectForListarRemitente]="false"
+          [nombrePropiedad]="'identificacionSociedad'" (onSelectValue)="onSelectSociedadORemitente($event)"
+          [limpiarFormulario]="formMustBeCleaned"></app-select-search-with-request>
+      </div>
+    </div>
+
+    <!-- Octava fila  -->
+    <div class="row mb-3">
+      <div class="col-lg-6" [class.container-input-invalid]="
+          formularioBusquedad.get('representanteLegal')?.invalid
+        ">
+        <label class="container-form__label">
+          Representante legal/particular/funcionario
+        </label>
+        <input type="text" name="representanteLegal" class="container-form__input" id="representanteLegal"
+          formControlName="representanteLegal" />
+        <p *ngIf="
+            formularioBusquedad.get('representanteLegal')?.hasError('maxlength')
+          ">
+          Máximo 100 caracteres.
+        </p>
+
+        <p *ngIf="
+            formularioBusquedad.get('representanteLegal')?.hasError('pattern')
+          ">
+          Este campo solo acepta letras y puntos.
+        </p>
+      </div>
+    </div>
+
+    <!-- Novena fila  -->
+    <div class="row mb-3">
+      <div class="col-lg-6">
+        <label class="container-form__label">Departamento</label>
+        <select class="form-select container-form__select" name="departamento" id="departamento"
+          formControlName="departamento">
+          <option value="">Seleccione un departamento</option>
+          <option *ngFor="let departamento of departamentos" value="{{ departamento.idDepartamento }}">
+            {{ departamento.nombreDepartamento }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-lg-6" [class.container-input-invalid]="
+          formularioBusquedad.hasError('ciudadInvalid')
+        ">
+        <label class="container-form__label">Ciudad</label>
+        <select class="form-select container-form__select" name="ciudad" id="ciudad" formControlName="ciudad">
+          <option value="">Seleccione una ciudad</option>
+          <option *ngFor="let ciudad of ciudades" value="{{ ciudad.nombreCiudad }}">
+            {{ ciudad.nombreCiudad }}
+          </option>
+        </select>
+
+        <p *ngIf="formularioBusquedad?.hasError('ciudadInvalid')">
+          Debe seleccionar una ciudad.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Cuarto bloque -->
+  <div class="container border border-3 rounded-3 mt-5 pb-5 pt-3">
+    <div class="row mb-3 mt-3">
+
+      <div class="col-lg-3">
+        <label class="container-form__label">Medio de envió</label>
+        <select class="form-select container-form__select" name="medioEnvio" formControlName="medioEnvio">
+          <option value="">Seleccione un medio</option>
+          <option *ngFor="let medio of MEDIO" value="{{ medio.codigo }}">
+            {{ medio.descripcion }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-lg-3">
+        <label class="container-form__label">Tipo de seguridad</label>
+        <select class="form-select container-form__select" name="tipoSeguridad" formControlName="tipoSeguridad">
+          <option value="">Seleccione un tipo de seguridad</option>
+          <option *ngFor="let seguridad of SEGURIDAD" value="{{ seguridad.codigo }}">
+            {{ seguridad.descripcion }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-lg-3" [class.container-input-invalid]="
+          formularioBusquedad.get('referenciaExternaNumero')?.invalid
+        ">
+        <label class="container-form__label">Referencia externa número</label>
+        <input type="text" name="referenciaExternaNumero" class="container-form__input" id="referenciaExternaNumero"
+          formControlName="referenciaExternaNumero" />
+
+        <p *ngIf="
+            formularioBusquedad
+              .get('referenciaExternaNumero')
+              ?.hasError('maxlength')
+          ">
+          Este campo acepta hasta 60 caracteres.
+        </p>
+
+        <p *ngIf="
+            formularioBusquedad
+              .get('referenciaExternaNumero')
+              ?.hasError('pattern')
+          ">
+          Este campo solo acepta caracteres alfanuméricos, guiones, puntos y el
+          símbolo de dólar.
+        </p>
+      </div>
+
+      <div class="col-lg-3" [class.container-input-invalid]="
+          formularioBusquedad.get('folios')?.invalid
+        ">
+        <label class="container-form__label">Folios</label>
+        <input type="number" name="folios" class="container-form__input" id="folios" formControlName="folios" />
+
+        <p *ngIf="formularioBusquedad.get('folios')?.hasError('max')">
+          Este campo solo acepta hasta 4 dígitos.
+        </p>
+
+        <p *ngIf="formularioBusquedad.get('folios')?.hasError('negativeNumber')">
+          Este campo solo admite números positivos.
+        </p>
+      </div>
+
+      <div class="col-lg-3" [class.container-input-invalid]="
+          formularioBusquedad.get('termino')?.invalid
+        ">
+        <label class="container-form__label">Término</label>
+        <input type="number" name="termino" class="container-form__input" id="termino" formControlName="termino" />
+
+        <p *ngIf="formularioBusquedad.get('termino')?.hasError('lengthTermino')">
+          Ingrese un valor válido, este campo solo acepta números positivos y
+          diferentes a 0, además debe tener un máximo de hasta dos caracteres.
+        </p>
+      </div>
+
+      <div class="col-lg-3" [class.container-input-invalid]="
+          formularioBusquedad.get('multa')?.invalid
+        ">
+        <label class="container-form__label">Multa</label>
+        <input type="number" name="multa" class="container-form__input" id="multa" formControlName="multa" />
+
+        <p *ngIf="formularioBusquedad.get('multa')?.hasError('max')">
+          Este campo acepta hasta 8 dígitos.
+        </p>
+
+        <p *ngIf="formularioBusquedad.get('multa')?.hasError('negativeNumber')">
+          Este campo no acepta números negativos.
+        </p>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-lg-3">
+        <label class="container-form__label">Fecha vence</label>
+        <input type="date" name="fechaVence" class="container-form__input" id="fechaVence" formControlName="fechaVence"
+          (keydown)="onEventKeydownInputDate($event)" />
+      </div>
+      <div class="col-lg-3">
+        <label class="container-form__label">Aplicación</label>
+        <select class="form-select container-form__select" name="aplicacion" formControlName="aplicacion">
+          <option value="">Selecione una opcion</option>
+          <option *ngFor="let app of apps" value="{{ app.system }}">
+            {{ app.application }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-lg-3" [class.container-input-invalid]="
+          formularioBusquedad.get('anexosFisicos')?.invalid
+        ">
+        <label class="container-form__label"> Anexos físicos </label>
+        <input type="text" name="anexosFisicos" class="container-form__input" id="anexosFisicos"
+          formControlName="anexosFisicos" />
+
+        <p *ngIf="
+            formularioBusquedad
+              .get('anexosFisicos')
+              ?.hasError('invalidAnexosFisicos')
+          ">
+          Este campo solo acepta caracteres alfanuméricos, guiones, puntos, y
+          los símbolos '(', ')', '/', '+'.
+        </p>
+      </div>
+
+      <div class="col-lg-3" [class.container-input-invalid]="
+          formularioBusquedad.get('borrador')?.invalid
+        ">
+        <label class="container-form__label">Borrador</label>
+        <input type="text" name="borrador" class="container-form__input" id="borrador" formControlName="borrador" />
+
+        <p *ngIf="formularioBusquedad.get('borrador')?.hasError('maxlength')">
+          Máximo 20 caracteres.
+        </p>
+
+        <p *ngIf="formularioBusquedad.get('borrador')?.hasError('pattern')">
+          Este campo solo acepta caracteres alfanuméricos y guiones.
+        </p>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-lg-3">
+        <label class="container-form__label">Estado</label>
+        <select class="form-select container-form__select" name="estado" formControlName="estado">
+          <option value="" selected>Seleccione uno</option>
+          <option value="0">
+            Cuando el número de días de término es cero.
+          </option>
+          <option value="1">
+            Cuando el número de días de término es mayor a cero.
+          </option>
+        </select>
+      </div>
+
+      <div class="col-lg-3" [class.container-input-invalid]="
+          formularioBusquedad.get('lote')?.invalid
+        ">
+        <label class="container-form__label">Lote</label>
+        <input type="number" name="lote" class="container-form__input" id="lote" formControlName="lote" />
+
+        <p *ngIf="formularioBusquedad.get('lote')?.hasError('lengthLote')">
+          Ingrese un valor válido, este campo solo acepta números positivos y
+          diferentes a 0, además debe tener un máximo de hasta tres caracteres.
+        </p>
+      </div>
+
+      <div class="col-lg-3" [class.container-input-invalid]="
+          formularioBusquedad.get('paquete')?.invalid
+        ">
+        <label class="container-form__label">Paquete</label>
+        <input type="text" name="paquete" class="container-form__input" id="paquete" formControlName="paquete" />
+
+        <p *ngIf="formularioBusquedad.get('paquete')?.hasError('pattern')">
+          Este campo solo acepta caracteres alfanuméricos y guiones.
+        </p>
+      </div>
+
+      <div class="col-lg-3">
+        <label class="container-form__label">Tipo de cuaderno</label>
+        <select class="form-select container-form__select" name="tipoCuaderno" formControlName="tipoCuaderno">
+          <option value="">Seleccione uno</option>
+          <option *ngFor="let cuadernos of tipoCuaderno" value="{{ cuadernos.codigo }}">
+            {{ cuadernos.descripcion }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-lg-3" [class.container-input-invalid]="
+          formularioBusquedad.get('postalEstado')?.invalid
+        ">
+        <label class="container-form__label">Postal estado</label>
+
+        <input type="text" class="container-form__input" name="postalEstado" formControlName="postalEstado" />
+
+        <p *ngIf="formularioBusquedad.get('postalEstado')?.hasError('pattern')">
+          Este campo solo acepta letras.
+        </p>
+      </div>
+
+      <div class="col-lg-3">
+        <label class="container-form__label">Fecha estados financieros</label>
+
+        <input type="date" class="container-form__input" name="fechaEstadosFinancieros"
+          formControlName="fechaEstadosFinancieros" (keydown)="onEventKeydownInputDate($event)" />
+      </div>
+
+      <div class="col-lg-3" [class.container-input-invalid]="
+          formularioBusquedad.get('usuarioQueProyecto')?.invalid
+        ">
+        <label class="container-form__label">Usuario que proyectó</label>
+
+        <input type="text" class="container-form__input" name="usuarioQueProyecto"
+          formControlName="usuarioQueProyecto" />
+
+        <p *ngIf="
+            formularioBusquedad.get('usuarioQueProyecto')?.hasError('pattern')
+          ">
+          Este campo solo acepta caracteres alfanuméricos.
+        </p>
+      </div>
+
+      <div class="col-lg-3">
+        <label class="container-form__label">Módulo</label>
+
+        <select name="modulo" class="form-select container-form__select" formControlName="modulo">
+          <option value="">Seleccione uno</option>
+          <option value="{{ item.id }}" *ngFor="let item of modulo">
+            {{ item.descripcion }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quinto bloque -->
+  <div class="container border border-3 rounded-3 mt-5 pb-5 pt-3">
+    <div class="row justify-content-md-center mb-3 mt-3">
+      <div class="col col-lg-8" [class.container-input-invalid]="
+          formularioBusquedad.get('busquedaPorContenido')?.invalid
+        ">
+        <label class="container-form__label">
+          Buscar palabra clave en el contenido de los documentos
+        </label>
+
+        <input type="text" name="busquedaPorContenido" class="container-form__input" id="busquedaPorContenido"
+          formControlName="busquedaPorContenido"
+          ngbTooltip="Recuerda que el resultado de las consultas con OCR tienen un límite de máximo 100 registros" />
+
+        <p *ngIf="
+            formularioBusquedad
+              .get('busquedaPorContenido')
+              ?.hasError('maxlength')
+          ">
+          Máximo 500 caracteres.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container d-flex justify-content-md-center mt-4">
+    <div class="col col-lg-2">
+      <button type="submit" class="btn btn-success" (click)="consultar()"
+        ngbTooltip="Recuerda que por defecto el resultado de la consulta será de 50 registros, si la consulta es con OCR tiene una limitación de hasta 100 registros.">
+        Consultar
+      </button>
+    </div>
+    <div class="col col-lg-2">
+      <button class="btn btn-danger" (click)="limpiarFormulario()">
+        Limpiar
+      </button>
+    </div>
+  </div>
+</form>
+<br />
+
+<div class="container" *ngIf="loading">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+<br />
+<br />
+<div class="container" *ngIf="consultaRealizada">
+  <div class="d-flex mb-4 justify-content-between">
+    <p>Total Resultado : {{ totalResultado | number }}</p>
+
+    <div style="column-gap: 1.4em" class="d-flex">
+      <!--<button
+        class="btn btn-primary me-3"
+        (click)="
+          openDialogDescargaMasiva('Descarga masiva', urlConsultaDescargaMasiva)
+        "
+      >
+        Descarga masiva
+      </button>-->
+
+      <a class="btn btn-primary me-3" [href]="urlConsultaDescargaMasiva" target="_blank">
+        Descarga masiva
+      </a>
+
+      <div ngbDropdown class="container-dropdown-reports">
+        <button ngbDropdownToggle class="btn btn-primary">
+          Generar reporte
+        </button>
+
+        <ul ngbDropdownMenu class="p-0 pt-2 pb-2" style="font-size: 0.9em" class="container-dropdown-reports__menu">
+          <li style="cursor: pointer" *ngIf="totalResultado <= 5000">
+            <div ngbDropdownItem class="mb-2" (click)="downloadReportPdfWithCRB()"
+              *ngIf="this.prepararFormulario().busquedaPorContenido">
+              <div class="d-flex align-items-center">
+                <img src="{{ logos.pdf }}" alt="Logo pdf" loading="lazy" decoding="async" width="27px" />
+                <p style="margin: 0; padding: 0; padding-left: 0.8em">
+                  Descargar reporte en PDF
+                </p>
+              </div>
+            </div>
+
+            <div ngbDropdownItem class="mb-2" (click)="downloadReportPdf()"
+              *ngIf="!this.prepararFormulario().busquedaPorContenido">
+              <div class="d-flex align-items-center">
+                <img src="{{ logos.pdf }}" alt="Logo pdf" loading="lazy" decoding="async" width="27px" />
+                <p style="margin: 0; padding: 0; padding-left: 0.8em">
+                  Descargar reporte en PDF
+                </p>
+              </div>
+            </div>
+          </li>
+
+          <li style="cursor: pointer" *ngIf="totalResultado <= 5000">
+            <div (click)="downloadReportExcelWithCRB()" *ngIf="this.prepararFormulario().busquedaPorContenido"
+              ngbDropdownItem class="mb-2">
+              <div class="d-flex align-items-center">
+                <img src="{{ logos.excel }}" alt="Logo excel" loading="lazy" decoding="async" width="27px" />
+                <p class="m-0 p-0" style="padding-left: 0.8em">
+                  Descargar reporte en Excel
+                </p>
+              </div>
+            </div>
+
+            <div (click)="downloadReportExcel()" *ngIf="!this.prepararFormulario().busquedaPorContenido" ngbDropdownItem
+              class="mb-2">
+              <div class="d-flex align-items-center">
+                <img src="{{ logos.excel }}" alt="Logo excel" loading="lazy" decoding="async" width="27px" />
+                <p style="margin: 0; padding: 0; padding-left: 0.8em">
+                  Descargar reporte en Excel
+                </p>
+              </div>
+            </div>
+          </li>
+
+          <li style="cursor: pointer">
+            <div (click)="generateReport(false)" *ngIf="!this.prepararFormulario().busquedaPorContenido" ngbDropdownItem
+              class="mb-2">
+              <div class="d-flex align-items-center">
+                <img src="{{ logos.email }}" alt="Logo gmail" loading="lazy" decoding="async" width="27px" />
+                <p style="margin: 0; padding: 0; padding-left: 0.8em">
+                  Enviar reporte en PDF al correo
+                </p>
+              </div>
+            </div>
+
+            <div ngbDropdownItem class="mb-2" (click)="generateReportWithCRB(false)"
+              *ngIf="this.prepararFormulario().busquedaPorContenido">
+              <div class="d-flex align-items-center">
+                <img src="{{ logos.email }}" alt="Logo gmail" loading="lazy" decoding="async" width="27px" />
+                <p style="margin: 0; padding: 0; padding-left: 0.8em">
+                  Enviar reporte en PDF al correo
+                </p>
+              </div>
+            </div>
+          </li>
+
+          <li style="cursor: pointer">
+            <div (click)="generateReport()" ngbDropdownItem *ngIf="!this.prepararFormulario().busquedaPorContenido">
+              <div class="d-flex align-items-center">
+                <img src="{{ logos.email }}" alt="Logo gmail" loading="lazy" width="27px" decoding="async" />
+                <p style="margin: 0; padding: 0; padding-left: 0.8em">
+                  Enviar reporte en Excel al correo
+                </p>
+              </div>
+            </div>
+
+            <div (click)="generateReportWithCRB()" *ngIf="this.prepararFormulario().busquedaPorContenido"
+              ngbDropdownItem>
+              <div class="d-flex align-items-center">
+                <img src="{{ logos.email }}" alt="Logo gmail" loading="lazy" width="27px" decoding="async" />
+                <p style="margin: 0; padding: 0; padding-left: 0.8em">
+                  Enviar reporte en Excel al correo
+                </p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-end align-items-center mb-4" style="column-gap: 1.4em">
+    <div ngbDropdown *ngIf="consultaRealizada && mostarPaginador" class="container-dropdown-quantity-registers">
+      <button ngbDropdownToggle class="btn btn-primary container-dropdown-quantity-registers__btn">
+        Cantidad registros
+      </button>
+
+      <ul ngbDropdownMenu>
+        <li ngbDropdownItem class="d-flex justify-content-between container-dropdown-quantity-registers__item"
+          (click)="onClickSpecificQuantityRegisters(50)">
+          <p class="m-0">50</p>
+
+          <div *ngIf="formularioBusquedad.get('cantidadRegistros')?.value === 50">
+            <i class="bi bi-check2 d-block" aria-hidden="true"></i>
+          </div>
+        </li>
+
+        <li ngbDropdownItem class="d-flex justify-content-between container-dropdown-quantity-registers__item"
+          (click)="onClickSpecificQuantityRegisters(100)">
+          <p class="m-0">100</p>
+
+          <div *ngIf="formularioBusquedad.get('cantidadRegistros')?.value === 100">
+            <i class="bi bi-check2 d-block" aria-hidden="true"></i>
+          </div>
+        </li>
+
+        <li ngbDropdownItem class="d-flex justify-content-between container-dropdown-quantity-registers__item"
+          (click)="onClickSpecificQuantityRegisters(300)">
+          <p class="m-0">300</p>
+
+          <div *ngIf="formularioBusquedad.get('cantidadRegistros')?.value === 300">
+            <i class="bi bi-check2 d-block" aria-hidden="true"></i>
+          </div>
+        </li>
+
+        <li ngbDropdownItem class="d-flex justify-content-between container-dropdown-quantity-registers__item"
+          (click)="onClickSpecificQuantityRegisters(500)">
+          <p class="m-0">500</p>
+
+          <div *ngIf="formularioBusquedad.get('cantidadRegistros')?.value === 500">
+            <i class="bi bi-check2 d-block" aria-hidden="true"></i>
+          </div>
+        </li>
+
+        <li ngbDropdownItem class="d-flex justify-content-between container-dropdown-quantity-registers__item"
+          (click)="onClickSpecificQuantityRegisters(750)">
+          <p class="m-0">750</p>
+
+          <div *ngIf="formularioBusquedad.get('cantidadRegistros')?.value === 750">
+            <i class="bi bi-check2 d-block" aria-hidden="true"></i>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div *ngIf="mostarPaginador" class="d-flex justify-content-end align-items-center" style="column-gap: 1.4em">
+      <button class="btn btn-warning" (click)="antes()" [disabled]="getPage() === 0"
+        [class.btn-block]="getPage() === 0">
+        Anterior
+      </button>
+
+      <p class="m-0">
+        Página actual: {{ formularioBusquedad.get("page")?.value + 1 }}
+      </p>
+      <p class="m-0">Total paginas: {{ totalPage.length - 1 | number }}</p>
+
+      <button class="btn btn-warning" (click)="despues()" [disabled]="
+          totalPage.length === 1 ||
+          formularioBusquedad.value.page + 1 === totalPage.length - 1
+        " [class.btn-block]="
+          totalPage.length === 1 ||
+          formularioBusquedad.value.page + 1 === totalPage.length - 1
+        ">
+        Siguiente
+      </button>
+    </div>
+  </div>
+</div>
+
+<section>
+  <app-table [tableContent]="documentos" [boolean]="loading" [pagina]="formularioBusquedad.get('page')?.value"
+    [cantidadRegistros]="formularioBusquedad.get('cantidadRegistros')?.value"></app-table>
+</section>

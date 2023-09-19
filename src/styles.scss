@@ -1,0 +1,51 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.87rem;
+}
+
+body::-webkit-scrollbar {
+  width: 12px;
+}
+
+body::-webkit-scrollbar-track {
+  background: white;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: rgb(201, 201, 201);
+  border-radius: 1em;
+}
+
+// Variables
+$bg-btn-confirm-error: #e46151;
+$bg-btn-confirm-success: #5cba5c;
+$bg-btn-confirm-info: #dc7535;
+
+// Estilos de las alertas de sweetalert2
+.container-modal {
+  &__title {
+    font-size: 1.2rem;
+  }
+
+  & .swal2-html-container {
+    font-size: 0.95rem;
+  }
+}
+
+.container-modal-error .swal2-confirm {
+  background-color: $bg-btn-confirm-error !important;
+}
+
+.container-modal-success .swal2-confirm {
+  background-color: $bg-btn-confirm-success !important;
+}
+
+.container-modal-info .swal2-confirm {
+  background-color: $bg-btn-confirm-info !important;
+}

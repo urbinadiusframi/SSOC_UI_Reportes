@@ -1,0 +1,24 @@
+<section>
+  <app-header [title]="title"></app-header>
+
+  <mat-dialog-content class="mat-typography">
+    <iframe
+      [src]="url"
+      width="100%"
+      height="600px"
+      title="Iframe cloud pak"
+      class="mt-1"
+    ></iframe>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button
+      class="btn btn-danger"
+      mat-button
+      mat-dialog-close
+      (click)="onClose()"
+    >
+      Cerrar
+    </button>
+  </mat-dialog-actions>
+</section>

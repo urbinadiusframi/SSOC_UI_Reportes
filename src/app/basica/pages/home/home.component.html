@@ -1,0 +1,279 @@
+<app-header [title]="'CONSULTA BÁSICA'"></app-header>
+<form [formGroup]="formularioBusquedad" class="container-form">
+  <!-- Primer bloque -->
+  <div class="container border border-3 rounded-3 mt-5 pb-5 pt-3">
+    <!-- Primer fila  -->
+    <div class="row mt-2 mb-3">
+      <div class="col-6" [class.container-input-invalid]="
+          formularioBusquedad.get('numeroRadicado')?.invalid
+        ">
+        <basica-numero-radicado [control]="formularioBusquedad.get('numeroRadicado')!"
+          formControlName="numeroRadicado"></basica-numero-radicado>
+      </div>
+
+      <div class="col-6" [class.container-input-invalid]="
+          (formularioBusquedad.get('fechaRadicacion')?.touched &&
+            formularioBusquedad.get('fechaRadicacion')?.invalid) ||
+          formularioBusquedad.hasError('DatesInvalid')
+        ">
+        <label class="container-form__label">Fecha desde</label>
+        <input type="date" name="fechaDesde" class="container-form__input" id="fechaDesde"
+          ngbTooltip="Se recomienda usar el campo fecha desde, fecha hasta o ambos, para que la ejecución de la consulta sea más rápida."
+          formControlName="fechaRadicacion" (keydown)="onEventKeydownInputDate($event)" />
+
+        <p *ngIf="formularioBusquedad?.hasError('DatesInvalid')">
+          La fecha inicial no puede ser mayor que la fecha final.
+        </p>
+      </div>
+
+      <div class="col-6" [class.container-input-invalid]="
+          formularioBusquedad.get('identificacionRemitente')?.invalid
+        ">
+        <label class="container-form__label">
+          Identificación del remitente
+        </label>
+
+        <app-select-search-with-request [buttonText]="'Seleccione un remitente'" [isSelectForListarRemitente]="true"
+          [placeholder]="'Buscar un remitente...'" [nombrePropiedad]="'identificacionRemitente'"
+          (onSelectValue)="onSelectSociedadORemitente($event)"
+          [limpiarFormulario]="formMustBeCleaned"></app-select-search-with-request>
+      </div>
+
+      <div class="col-6" [class.container-input-invalid]="
+          formularioBusquedad.get('fechaHasta')?.touched &&
+          formularioBusquedad.get('fechaHasta')?.invalid
+        ">
+        <label class="container-form__label">Fecha hasta</label>
+        <input type="date" name="fechaHasta"
+          ngbTooltip="Se recomienda usar el campo fecha desde, fecha hasta o ambos, para que la ejecución de la consulta sea más rápida."
+          class="container-form__input" id="fechaHasta" formControlName="fechaHasta"
+          (keydown)="onEventKeydownInputDate($event)" />
+      </div>
+
+
+      <div class="col-6" [class.container-input-invalid]="
+          formularioBusquedad.get('expediente')?.invalid
+        ">
+        <label class="container-form__label">Expediente</label>
+        <input type="text" name="expediente" class="container-form__input" id="expediente"
+          formControlName="expediente" />
+
+        <p *ngIf="formularioBusquedad.get('expediente')?.hasError('maxlength')">
+          Máximo 20 caracteres.
+        </p>
+
+        <p *ngIf="formularioBusquedad.get('expediente')?.hasError('pattern')">
+          Este campo solo acepta caracteres alfanuméricos y guiones.
+        </p>
+      </div>
+
+      <div class="col-6">
+      </div>
+
+
+      <div class="col-6">
+        <label class="container-form__label">
+          Código y/o nombre dependencia origen
+        </label>
+        <app-dropdown-search [formControlConsultaMigrados]="
+            getFormControl('codigoOdependenciaOrigen')
+          " [datos]="dependencias" [limpiarFormulario]="formMustBeCleaned"></app-dropdown-search>
+      </div>
+
+
+      <div class="col-6">
+        <label class="container-form__label">Código y/o nombre trámite</label>
+        <app-dropdown-search [formControlConsultaMigrados]="getFormControl('codigoONombreTramite')" [datos]="tramites"
+          [limpiarFormulario]="formMustBeCleaned"></app-dropdown-search>
+      </div>
+
+
+      <div class="col-6">
+        <label class="container-form__label"> Funcionario origen </label>
+        <app-dropdown-search [formControlConsultaMigrados]="getFormControl('funcionarioOrigen')" [datos]="funcionarios"
+          [limpiarFormulario]="formMustBeCleaned"></app-dropdown-search>
+      </div>
+
+
+      <div class="col-6">
+        <label class="container-form__label"> Estado funcionario </label>
+        <select class="form-select container-form__select" name="estado" formControlName="estado">
+          <option value="" selected>Seleccione uno</option>
+          <option value="0">
+            Activo.
+          </option>
+          <option value="1">
+            Inactivo.
+          </option>
+        </select>
+      </div>
+
+
+
+      <div class="col-6">
+        <label class="container-form__label"> Tipo Seguridad </label>
+        <app-dropdown-search [formControlConsultaMigrados]="getFormControl('tipoSeguridad')" [datos]="SEGURIDADES"
+          [limpiarFormulario]="formMustBeCleaned"></app-dropdown-search>
+      </div>
+
+      <!-- <div class="col-12 d-flex align-items-start">
+        <label class="container-form__label"> Tipo seguridad: </label>
+        <div class="container">
+          <div class="form-check form-check-inline" *ngFor="let value of SEGURIDAD">
+            <input class="form-check-input" type="checkbox" [name]="value.codigo" [id]="value.codigo"
+              [value]="value.codigo" formControlName="tipoSeguridad" />
+            <label class="form-check-label" [for]="value.codigo">{{value.nombre}}</label>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="col col-12" [class.container-input-invalid]="
+          formularioBusquedad.get('busquedaPorContenido')?.invalid
+        ">
+        <label class="container-form__label">
+          Buscar por palabra clave
+        </label>
+
+        <input type="text" name="busquedaPorContenido" class="container-form__input" id="busquedaPorContenido"
+          formControlName="busquedaPorContenido"
+          ngbTooltip="Escriba la columna seguido el signo igual y finalice con el valor a filtrar, use la coma (,) para agregar más filtros : numeroRadicado=19,nombreTramite=Tramite1" />
+
+        <p *ngIf="
+            formularioBusquedad
+              .get('busquedaPorContenido')
+              ?.hasError('maxlength')
+          ">
+          Máximo 500 caracteres.
+        </p>
+      </div>
+
+
+
+    </div>
+
+  </div>
+
+  <div class="container d-flex justify-content-beween mt-4">
+    <div class="col col-lg-3">
+      <button type="submit" class="btn btn-success" (click)="consultar()"
+        ngbTooltip="Recuerda que por defecto el resultado de la consulta será de 50 registros, si la consulta es con OCR tiene una limitación de hasta 100 registros.">
+        Consultar
+      </button>
+    </div>
+    <div class="col col-lg-3">
+      <button class="btn btn-danger" (click)="limpiarFormulario()">
+        Limpiar
+      </button>
+    </div>
+
+    <div class="col col-lg-2 d-flex justify-content-end" (click)="downloadReportExcel()">
+      <button type="submit" class="btn" alt="Descargar usando filtros">
+        <img src="{{ logos.excel }}" alt="Logo excel" loading="lazy" decoding="async" width="27px" />
+      </button>
+    </div>
+
+    <div class="col col-lg-2 d-flex justify-content-end">
+      <button type="submit" class="btn" alt="Descargar reporte en PDF">
+        <img src="{{ logos.pdf }}" alt="Logo pdf" loading="lazy" decoding="async" width="27px" />
+      </button>
+    </div>
+  </div>
+
+</form>
+<br />
+
+<div class="container" *ngIf="loading">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+<br />
+<br />
+<div class="container" *ngIf="consultaRealizada">
+  <div class="d-flex mb-4 justify-content-between">
+    <p>Total Resultado : {{ totalResultado | number }}</p>
+
+    <div style="column-gap: 1.4em" class="d-flex">
+    </div>
+  </div>
+  <div class="d-flex justify-content-end align-items-center mb-4" style="column-gap: 1.4em">
+    <div ngbDropdown *ngIf="consultaRealizada && mostarPaginador" class="container-dropdown-quantity-registers">
+      <button ngbDropdownToggle class="btn btn-primary container-dropdown-quantity-registers__btn">
+        Cantidad registros
+      </button>
+
+      <ul ngbDropdownMenu>
+        <li ngbDropdownItem class="d-flex justify-content-between container-dropdown-quantity-registers__item"
+          (click)="onClickSpecificQuantityRegisters(50)">
+          <p class="m-0">50</p>
+
+          <div *ngIf="formularioBusquedad.get('cantidadRegistros')?.value === 50">
+            <i class="bi bi-check2 d-block" aria-hidden="true"></i>
+          </div>
+        </li>
+
+        <li ngbDropdownItem class="d-flex justify-content-between container-dropdown-quantity-registers__item"
+          (click)="onClickSpecificQuantityRegisters(100)">
+          <p class="m-0">100</p>
+
+          <div *ngIf="formularioBusquedad.get('cantidadRegistros')?.value === 100">
+            <i class="bi bi-check2 d-block" aria-hidden="true"></i>
+          </div>
+        </li>
+
+        <li ngbDropdownItem class="d-flex justify-content-between container-dropdown-quantity-registers__item"
+          (click)="onClickSpecificQuantityRegisters(300)">
+          <p class="m-0">300</p>
+
+          <div *ngIf="formularioBusquedad.get('cantidadRegistros')?.value === 300">
+            <i class="bi bi-check2 d-block" aria-hidden="true"></i>
+          </div>
+        </li>
+
+        <li ngbDropdownItem class="d-flex justify-content-between container-dropdown-quantity-registers__item"
+          (click)="onClickSpecificQuantityRegisters(500)">
+          <p class="m-0">500</p>
+
+          <div *ngIf="formularioBusquedad.get('cantidadRegistros')?.value === 500">
+            <i class="bi bi-check2 d-block" aria-hidden="true"></i>
+          </div>
+        </li>
+
+        <li ngbDropdownItem class="d-flex justify-content-between container-dropdown-quantity-registers__item"
+          (click)="onClickSpecificQuantityRegisters(750)">
+          <p class="m-0">750</p>
+
+          <div *ngIf="formularioBusquedad.get('cantidadRegistros')?.value === 750">
+            <i class="bi bi-check2 d-block" aria-hidden="true"></i>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div *ngIf="mostarPaginador" class="d-flex justify-content-end align-items-center" style="column-gap: 1.4em">
+      <button class="btn btn-warning" (click)="antes()" [disabled]="getPage() === 0"
+        [class.btn-block]="getPage() === 0">
+        Anterior
+      </button>
+
+      <p class="m-0">
+        Página actual: {{ formularioBusquedad.get("page")?.value.pageNumber + 1 }}
+      </p>
+      <p class="m-0">Total paginas: {{ totalPage.length - 1 | number }}</p>
+
+      <button class="btn btn-warning" (click)="despues()" [disabled]="
+          totalPage.length === 1 ||
+          formularioBusquedad.value.page + 1 === totalPage.length - 1
+        " [class.btn-block]="
+          totalPage.length === 1 ||
+          formularioBusquedad.value.page + 1 === totalPage.length - 1
+        ">
+        Siguiente
+      </button>
+    </div>
+  </div>
+</div>
+
+<section>
+  <app-table [tableContent]="documentos" [boolean]="loading"
+    [pagina]="formularioBusquedad.get('page')?.value.pageNumber"
+    [cantidadRegistros]="formularioBusquedad.get('cantidadRegistros')?.value.pageSize"></app-table>
+</section>

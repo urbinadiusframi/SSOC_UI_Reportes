@@ -1,0 +1,74 @@
+.container-form {
+  &__input,
+  &__select {
+    width: 100%;
+    height: 37.7px;
+    display: block;
+    border-radius: 0.4em;
+    border: 1px solid #ced4da;
+    border-bottom: 1px solid #153985;
+    padding-left: 0.8em;
+    padding-right: 1.4em;
+    margin-top: 0.4em;
+  }
+
+  &__select--margin {
+    margin-top: 0;
+  }
+
+  &__input-container {
+    position: relative;
+  }
+
+  &__input:focus,
+  &__select:focus {
+    border: 1px solid #153985;
+  }
+
+  &__label {
+    font-weight: 550;
+  }
+}
+
+.container-input-invalid {
+  & input,
+  & select {
+    border: 2px solid #dc3545;
+    color: #dc3545;
+  }
+
+  & input:focus,
+  & select:focus {
+    outline: 3px solid #ea5b69;
+  }
+
+  & p {
+    color: #dc3545;
+    margin: 0.5em 0 0.5em 0.1em;
+  }
+}
+
+.container-dropdown-quantity-registers {
+  height: 37.7px;
+  cursor: pointer;
+
+  &__item {
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container-dropdown-reports {
+    &__menu {
+      width: 250px;
+    }
+  }
+}
+
+@media (min-width: 1500px) {
+  .container-dropdown-reports {
+    &__menu {
+      width: 260px;
+    }
+  }
+}

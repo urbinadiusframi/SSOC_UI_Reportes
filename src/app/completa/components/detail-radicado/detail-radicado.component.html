@@ -1,0 +1,415 @@
+<section class="container-detail-radicado">
+  <app-header [title]="'Detalle del radicado'"></app-header>
+  <mat-dialog-content>
+    <div class="container border border-3 rounded-3 mt-4 pt-5 pb-5">
+      <div class="row">
+        <div class="col-md-3 col-3">
+          <p><u>Número radicado:</u></p>
+          <p class="ml-1">
+            {{ document.numeroRadicado }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Número radicado anterior:</u></p>
+          <p class="ml-1">
+            {{ document.numeroRadicadoAnterior }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Entrada o salida:</u></p>
+          <p class="ml-1">
+            {{ document.entradaOSalida }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Fecha radicación postal:</u></p>
+          <p class="ml-1">
+            {{ document.fechaRadicacionPostal | date : "dd/MM/YYYY" }}
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-3">
+          <p><u>Hora radicación:</u></p>
+          <p class="ml-1">
+            {{ document.horaRadicacion }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Expediente:</u></p>
+          <p class="ml-1">
+            {{ document.expediente }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Código trámite:</u></p>
+          <p class="ml-1">
+            {{ document.codigoTramite }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Nombre trámite:</u></p>
+          <p class="ml-1">
+            {{ document.nombreTramite }}
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-3">
+          <p><u>Código proceso:</u></p>
+          <p class="ml-1">
+            {{ document.codigoProceso }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Nombre proceso:</u></p>
+          <p class="ml-1">
+            {{ document.nombreProceso }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Identificación del destinatario:</u></p>
+          <p class="ml-1">
+            {{ document.identificacionDestinatario }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Nombre del destinatario:</u></p>
+          <p class="ml-1">
+            {{ document.nombreDestinatario }}
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-3">
+          <p><u>Usuario que radicó:</u></p>
+          <p class="ml-1">
+            {{ document.usuarioRadicador }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Responsable firma:</u></p>
+          <p class="ml-1">
+            {{ document.responsableFirma }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Digitalización:</u></p>
+          <p class="ml-1">
+            {{ document.digitalizacion }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Digitalizador:</u></p>
+          <p class="ml-1">
+            {{ document.digitalizador }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container border border-3 rounded-3 mt-5 pb-5 pt-5">
+      <div class="row">
+        <div class="col-md-3 col-3">
+          <p><u>Nombre dependencia asignada:</u></p>
+          <p class="ml-1">
+            {{ document.nombreDependenciaAsignada }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Identificación dependencia asignada:</u></p>
+          <p class="ml-1">
+            {{ document.identificacionDependenciaAsignada }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Funcionario asignado:</u></p>
+          <p class="ml-1">
+            {{ document.funcionarioAsignado }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Funcionario origen:</u></p>
+          <p class="ml-1">
+            {{ document.funcionarioOrigen }}
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-3">
+          <p><u>Código dependencia origen:</u></p>
+          <p class="ml-1">
+            {{ document.codigoDependenciaOrigen }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Nombre dependencia origen:</u></p>
+          <p class="ml-1">
+            {{ document.nombreDependenciaOrigen }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container border border-3 rounded-3 mt-5 pb-5 pt-5">
+      <div class="row">
+        <div class="col-md-3 col-3">
+          <p><u>Identificación del remitente:</u></p>
+          <p class="ml-1">
+            {{ document.identificacionRemitente }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Nombre del remitente:</u></p>
+          <p class="ml-1">
+            {{ document.nombreRemitente }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Representante legal/particular/funcionario:</u></p>
+          <p class="ml-1">
+            {{ document.representanteLegal }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Correo electrónico:</u></p>
+          <p class="ml-1">
+            {{ document.correoElectronico }}
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-3">
+          <p><u>Departamento:</u></p>
+          <p class="ml-1">
+            {{ document.departamento }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Ciudad:</u></p>
+          <p class="ml-1">
+            {{ document.ciudad }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Dirección:</u></p>
+          <p class="ml-1">
+            {{ document.direccion }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Teléfono:</u></p>
+          <p class="ml-1">
+            {{ document.telefono }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container border border-3 rounded-3 mt-5 pb-5 pt-5">
+      <div class="row">
+        <div class="col-md-3 col-3">
+          <p><u>Número identificación persona natural y/o jurídica:</u></p>
+          <p class="ml-1">
+            {{ document.identificacionSociedad }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Nombre de la persona natural y/o jurídica:</u></p>
+          <p class="ml-1">
+            {{ document.nombreSociedad }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Línea:</u></p>
+          <p class="ml-1">
+            {{ document.linea }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Medio de envió:</u></p>
+          <p class="ml-1">
+            {{ document.medioEnvio }}
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-3">
+          <p><u>Consecutivo:</u></p>
+          <p class="ml-1">
+            {{ document.consecutivo }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Tipo de seguridad:</u></p>
+          <p class="ml-1">
+            {{ document.tipoSeguridad }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Referencia externa número:</u></p>
+          <p class="ml-1">
+            {{ document.referenciaExternaNumero }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Folios:</u></p>
+          <p class="ml-1">
+            {{ document.folios }}
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-3">
+          <p><u>Término:</u></p>
+          <p class="ml-1">
+            {{ document.termino }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Multa:</u></p>
+          <p class="ml-1">
+            {{ document.multa }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Fecha vence:</u></p>
+          <p class="ml-1">
+            {{ document.fechaVence | date : "dd/MM/yyyy" }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Aplicación:</u></p>
+          <p class="ml-1">
+            {{ document.aplicacion }}
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-3">
+          <p><u>Anexos físicos:</u></p>
+          <p class="ml-1">
+            {{ document.anexosFisicos }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Borrador:</u></p>
+          <p class="ml-1">
+            {{ document.borrador }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Estado:</u></p>
+          <p class="ml-1">
+            {{ document.estado }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Lote:</u></p>
+          <p class="ml-1">
+            {{ document.lote }}
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-3">
+          <p><u>Paquete:</u></p>
+          <p class="ml-1">
+            {{ document.paquete }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Tipo de cuaderno:</u></p>
+          <p class="ml-1">
+            {{ document.tipoCuaderno }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Fecha estados financieros:</u></p>
+          <p class="ml-1">
+            {{ document.fechaEstadoFinancieros | date : "dd/MM/yyyy" }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Postal estado:</u></p>
+          <p class="ml-1">
+            {{ document.postalEstado }}
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-3">
+          <p><u>Usuario que proyectó:</u></p>
+          <p class="ml-1">
+            {{ document.usuarioQueProyecto }}
+          </p>
+        </div>
+
+        <div class="col-md-3 col-3">
+          <p><u>Módulo:</u></p>
+          <p class="ml-1">
+            {{ document.modulo }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button
+      class="btn btn-danger"
+      mat-button
+      mat-dialog-close
+      (click)="onClose()"
+    >
+      Cerrar
+    </button>
+  </mat-dialog-actions>
+</section>

@@ -1,0 +1,550 @@
+<div
+  ngbDropdown
+  [autoClose]="false"
+  class="container-select-drop-down container-select"
+>
+  <button ngbDropdownToggle class="btn btn-success">Ocultar columnas</button>
+
+  <ul ngbDropdownMenu class="container-list-items">
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Radicación Número
+      <input
+        type="checkbox"
+        name="numeroRadicado"
+        [checked]="options.numeroRadicado"
+        (change)="onChecked($event)"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Módulo
+      <input
+        type="checkbox"
+        name="modulo"
+        [checked]="options.modulo"
+        (change)="onChecked($event)"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Usuario que proyectó
+      <input
+        type="checkbox"
+        name="usuarioQueProyecto"
+        [checked]="options.usuarioQueProyecto"
+        (change)="onChecked($event)"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Usuario Radicador
+      <input
+        type="checkbox"
+        name="usuarioRadicado"
+        [checked]="options.usuarioRadicador"
+        (change)="onChecked($event)"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Fecha Radicación
+      <input
+        type="checkbox"
+        name="fechaRadicacionPostal"
+        [checked]="options.fechaRadicacionPostal"
+        (change)="onChecked($event)"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Funcionario Asignado
+      <input
+        type="checkbox"
+        name="funcionarioAsignado"
+        [checked]="options.funcionarioAsignado"
+        (change)="onChecked($event)"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Funcionario Origen
+      <input
+        type="checkbox"
+        name="funcionarioOrigen"
+        (change)="onChecked($event)"
+        [checked]="options.funcionarioOrigen"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Código proceso
+      <input
+        type="checkbox"
+        name="codigoProceso"
+        (change)="onChecked($event)"
+        [checked]="options.codigoProceso"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Nombre proceso
+      <input
+        type="checkbox"
+        name="nombreProceso"
+        (change)="onChecked($event)"
+        [checked]="options.nombreProceso"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Nombre trámite
+      <input
+        type="checkbox"
+        name="nombreTramite"
+        [checked]="options.nombreTramite"
+        (change)="onChecked($event)"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Expediente
+      <input
+        type="checkbox"
+        name="expediente"
+        [checked]="options.expediente"
+        (change)="onChecked($event)"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Nombre destino
+      <input
+        type="checkbox"
+        name="nombreDestinatario"
+        (change)="onChecked($event)"
+        [checked]="options.nombreDestinatario"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Responsable firma
+      <input
+        type="checkbox"
+        name="responsableFirma"
+        (change)="onChecked($event)"
+        [checked]="options.responsableFirma"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Lote
+      <input
+        type="checkbox"
+        name="lote"
+        (change)="onChecked($event)"
+        [checked]="options.lote"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Postal estado
+      <input
+        type="checkbox"
+        name="postalEstado"
+        (change)="onChecked($event)"
+        [checked]="options.postalEstado"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Fecha estado financieros
+      <input
+        type="checkbox"
+        name="fechaEstadoFinancieros"
+        (change)="onChecked($event)"
+        [checked]="options.fechaEstadoFinancieros"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Correo
+      <input
+        type="checkbox"
+        name="correoElectronico"
+        (change)="onChecked($event)"
+        [checked]="options.correoElectronico"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Numero radicado anterior
+      <input
+        type="checkbox"
+        name="numeroRadicadoAnterior"
+        (change)="onChecked($event)"
+        [checked]="options.numeroRadicadoAnterior"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Identificación dependencia asignada
+      <input
+        type="checkbox"
+        name="identificacionDependenciaAsignada"
+        (change)="onChecked($event)"
+        [checked]="options.identificacionDependenciaAsignada"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Nombre dependencia asignada
+      <input
+        type="checkbox"
+        name="nombreDependenciaAsignada"
+        (change)="onChecked($event)"
+        [checked]="options.nombreDependenciaAsignada"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Código trámite
+      <input
+        type="checkbox"
+        name="codigoTramite"
+        (change)="onChecked($event)"
+        [checked]="options.codigoTramite"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Identificación remitente
+      <input
+        type="checkbox"
+        name="identificacionRemitente"
+        (change)="onChecked($event)"
+        [checked]="options.identificacionRemitente"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Número identificación persona natural y/o jurídica
+      <input
+        type="checkbox"
+        name="identificacionSociedad"
+        (change)="onChecked($event)"
+        [checked]="options.identificacionSociedad"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Código dependencia origen
+      <input
+        type="checkbox"
+        name="codigoDependenciaOrigen"
+        (change)="onChecked($event)"
+        [checked]="options.codigoDependenciaOrigen"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Nombre de la persona natural y/o jurídica
+      <input
+        type="checkbox"
+        name="nombreSociedad"
+        (change)="onChecked($event)"
+        [checked]="options.nombreSociedad"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Identificación destinatario
+      <input
+        type="checkbox"
+        name="identificacionDestinatario"
+        (change)="onChecked($event)"
+        [checked]="options.identificacionDestinatario"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Estado
+      <input
+        type="checkbox"
+        name="estado"
+        (change)="onChecked($event)"
+        [checked]="options.estado"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Nombre remitente
+      <input
+        type="checkbox"
+        name="nombreRemitente"
+        (change)="onChecked($event)"
+        [checked]="options.nombreRemitente"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Código dependencia origen
+
+      <input
+        type="checkbox"
+        name="codigoDependenciaOrigen"
+        (change)="onChecked($event)"
+        [checked]="options.codigoDependenciaOrigen"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Hora radicación
+      <input
+        type="checkbox"
+        name="horaRadicacion"
+        (change)="onChecked($event)"
+        [checked]="options.horaRadicacion"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Número folios
+      <input
+        type="checkbox"
+        name="folios"
+        (change)="onChecked($event)"
+        [checked]="options.folios"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Entrada o salida
+      <input
+        type="checkbox"
+        name="entradaOSalida"
+        (change)="onChecked($event)"
+        [checked]="options.entradaOSalida"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Representante Legal/Particular/Funcionario
+      <input
+        type="checkbox"
+        name="representanteLegal"
+        (change)="onChecked($event)"
+        [checked]="options.representanteLegal"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Dirección
+      <input
+        type="checkbox"
+        name="direccion"
+        (change)="onChecked($event)"
+        [checked]="options.direccion"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Teléfono
+      <input
+        type="checkbox"
+        name="telefono"
+        (change)="onChecked($event)"
+        [checked]="options.telefono"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Ciudad
+      <input
+        type="checkbox"
+        name="ciudad"
+        (change)="onChecked($event)"
+        [checked]="options.ciudad"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Tipo cuaderno
+      <input
+        type="checkbox"
+        name="tipoCuaderno"
+        (change)="onChecked($event)"
+        [checked]="options.tipoCuaderno"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Medio de envío
+      <input
+        type="checkbox"
+        name="medioEnvio"
+        (change)="onChecked($event)"
+        [checked]="options.medioEnvio"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Consecutivo
+      <input
+        type="checkbox"
+        name="consecutivo"
+        (change)="onChecked($event)"
+        [checked]="options.consecutivo"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Tipo de seguridad
+      <input
+        type="checkbox"
+        name="tipoSeguridad"
+        (change)="onChecked($event)"
+        [checked]="options.tipoSeguridad"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Referencia externa
+      <input
+        type="checkbox"
+        name="referenciaExternaNumero"
+        (change)="onChecked($event)"
+        [checked]="options.referenciaExternaNumero"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Término
+      <input
+        type="checkbox"
+        name="termino"
+        (change)="onChecked($event)"
+        [checked]="options.termino"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Multa
+      <input
+        type="checkbox"
+        name="multa"
+        (change)="onChecked($event)"
+        [checked]="options.multa"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Fecha vence
+      <input
+        type="checkbox"
+        name="fechaVence"
+        (change)="onChecked($event)"
+        [checked]="options.fechaVence"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Aplicación
+      <input
+        type="checkbox"
+        name="aplicacion"
+        (change)="onChecked($event)"
+        [checked]="options.aplicacion"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Borrador
+      <input
+        type="checkbox"
+        name="borrador"
+        (change)="onChecked($event)"
+        [checked]="options.borrador"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Línea
+      <input
+        type="checkbox"
+        name="linea"
+        (change)="onChecked($event)"
+        [checked]="options.linea"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Digitalización
+      <input
+        type="checkbox"
+        name="digitalizacion"
+        (change)="onChecked($event)"
+        [checked]="options.digitalizacion"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Digitalizador
+      <input
+        type="checkbox"
+        name="digitalizador"
+        (change)="onChecked($event)"
+        [checked]="options.digitalizador"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Anexos físicos
+      <input
+        type="checkbox"
+        name="anexosFisicos"
+        (change)="onChecked($event)"
+        [checked]="options.anexosFisicos"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Nombre dependencia origen
+      <input
+        type="checkbox"
+        name="nombreDependenciaOrigen"
+        (change)="onChecked($event)"
+        [checked]="options.nombreDependenciaOrigen"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Paquete
+      <input
+        type="checkbox"
+        name="paquete"
+        (change)="onChecked($event)"
+        [checked]="options.paquete"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Detalle
+      <input
+        type="checkbox"
+        name="detalle"
+        [checked]="options.detalle"
+        (change)="onChecked($event)"
+      />
+    </li>
+
+    <li ngbDropdownItem class="d-flex justify-content-between">
+      Visualizar
+      <input
+        type="checkbox"
+        name="visualizar"
+        [checked]="options.visualizar"
+        (change)="onChecked($event)"
+      />
+    </li>
+  </ul>
+</div>

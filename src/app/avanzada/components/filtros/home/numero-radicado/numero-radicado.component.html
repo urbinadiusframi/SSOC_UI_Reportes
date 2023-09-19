@@ -1,0 +1,40 @@
+<div class="" [class.container-input-invalid]="
+          control?.invalid
+        ">
+  <label class="container-form__label"> No de radicado </label>
+  <!-- <input
+          type="text"
+          class="container-form__input"
+          name="numeroRadicado"
+          id="numeroRadicado"
+          formControlName="numeroRadicado"
+        /> -->
+
+  <input type="text" class="container-form__input" name="numeroRadicado" id="numeroRadicado" [(ngModel)]="value"
+    class="container-form__input" #myInput (input)="onInputChange(myInput?.value!)" />
+
+  <p *ngIf="
+            control?.hasError('minlength') &&
+            control?.value !== ''
+          ">
+    Mínimo 14 caracteres.
+  </p>
+
+  <p *ngIf="
+            control?.hasError('maxlength')
+          ">
+    Máximo 20 caracteres.
+  </p>
+
+  <p *ngIf="control?.hasError('pattern')">
+    Este campo solo acepta caracteres alfanuméricos y guiones.
+  </p>
+
+  <p *ngIf="
+            control
+              ?.hasError('numeroRadicadoIsNotValid')
+          ">
+    Ingrese un número de radicado válido.
+  </p>
+
+</div>

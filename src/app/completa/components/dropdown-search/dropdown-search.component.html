@@ -1,0 +1,59 @@
+<div ngbDropdown class="d-block container-dropdown">
+  <div
+    class="form-control d-flex align-items-center justify-content-between container-dropdown__btn"
+    id="dropdownForm1"
+    ngbDropdownToggle
+    ngbTooltip="Debe buscar y seleccionar una opción."
+    (click)="onClickDropDown()"
+  >
+    <div class="container-dropdown__btn-info">
+      {{ buttonText }}
+    </div>
+  </div>
+
+  <div
+    ngbDropdownMenu
+    aria-labelledby="dropdownForm1"
+    class="container-select-search"
+  >
+    <form class="p-2">
+      <div class="container-select-search__container-input">
+        <input type="text" [formControl]="control" class="form-control" />
+
+        <i
+          class="bi bi-x container-select-search__icon"
+          aria-hidden="true"
+          *ngIf="
+            control.value ||
+            (formControlConsultaMigrados.value &&
+              buttonText !== 'Seleccione una opcion')
+          "
+          (click)="onClickButtonDelete()"
+        ></i>
+      </div>
+
+      <div class="mt-3 rounded-1">
+        <div class="disabled" *ngIf="sinResultados" ngbDropdownItem>
+          No se encontraron resultados.
+        </div>
+
+        <div
+          *ngFor="let value of filteredValues$ | async"
+          ngbDropdownItem
+          (click)="onSelectOption(value)"
+        >
+          <p class="container-select-search__paragraph">
+            {{ value }}
+          </p>
+
+          <div
+            *ngIf="formControlConsultaMigrados.value === value"
+            class="container-select-search__check-icon"
+          >
+            <i class="bi bi-check2 d-block" aria-hidden="true"></i>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
